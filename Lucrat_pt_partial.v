@@ -1,0 +1,127 @@
+Inductive Nat :=
+| O : Nat
+| S:Nat -> Nat.
+
+Fixpoint plus ( n m : Nat)  : Nat:=
+ match n with
+  | O=> m
+  | (S n')=>S (plus n' m)
+end.
+
+Theorem ex_2_1_14 :
+  forall m n : Nat, m = n -> plus m n = plus n n.
+Proof.
+  intros.
+  rewrite H.
+  reflexivity.
+Qed.
+
+Theorem ex2_1_15 :
+  forall m n : Nat, m=n->plus m n = plus m m.
+Proof.
+  intros.
+  rewrite<-H.
+  reflexivity.
+Qed.
+
+Theorem plus_c_a:
+  forall k, plus k (S O)  <> O.
+Proof.
+intros.
+destruct k as [|k'] eqn:E.
+-simpl.
+unfold not.
+intro.
+inversion H.
+-simpl.
+unfold not.
+intro.
+inversion H.
+Qed.
+
+
+Theorem plus_c_a':
+forall k, plus k (S O) <> O.
+Proof.
+intros.
+unfold not.
+intro H.
+destruct k as [|k'] eqn:E.
+-inversion H.
+-inversion H.
+Qed.
+Check Nat_ind.
+
+Theorem plus_n_O_is_n:
+forall n, plus n O = n.
+Proof.
+induction n.
+-simpl.
+  reflexivity.
+-simpl.
+rewrite IHn.
+reflexivity.
+Qed.
+
+(*2.2.1*)
+
+Theorem plus_n_Sm_is_n_m:
+forall n m, plus n (S m) = S(plus n m).
+Proof.
+intro n.
+induction n.
+-induction m.
+  +simpl.
+   reflexivity.
+  +simpl.
+   reflexivity.
+-simpl.
+ induction m.
+  +rewrite IHn.
+   reflexivity.
+  +rewrite IHn.
+    reflexivity.
+Qed.
+
+(*2.2.2*)
+Theorem plus_exercise_1:
+forall n, plus n(plus n O) = plus n n.
+Proof.
+  induction n.
+  -simpl.
+trivial.
+-simpl.
+rewrite plus_n_Sm_is_n_m.
+rewrite plus_n_Sm_is_n_m.
+rewrite IHn.
+reflexivity.
+Qed.
+
+(*2.5.1*)
+
+Theorem ex_falso:
+forall P:Prop, False->P.
+Proof.
+intros.
+destruct H.
+Qed.
+
+(*2.5.2*)
+Theorem and_elim_1:
+forall A B:Prop, (A /\ B) ->A.
+Proof.
+intros A B [HA HB].
+apply HA.
+Qed.
+
+
+(*2.5.3*)
+Theorem and_elim_2:
+
+
+
+
+
+
+
+  
